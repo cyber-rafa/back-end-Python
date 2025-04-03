@@ -24,10 +24,10 @@ def atualizar_registro(con, cursor, nome, email, id):
         'UPDATE clientes SET nome =?, email=? WHERE id=?;', data)
     con.commit()
 
+def deletar_registro(con, cursor, id):
+    data = (id,)
+    cursor.execute(
+        'DELETE FROM clientes WHERE id=?;', data)
+    con.commit()
 
-atualizar_registro(con, cursor, 'rafael willian', 'rafa@gmail.com', 1)
-
-
-
-atualizar_registro(con, cursor, 'thais', 'thais@gmail.com', 3)
-#nao existe o id 3 entre os registros entao nao vai atualizar nada
+deletar_registro(con, cursor,  1)
