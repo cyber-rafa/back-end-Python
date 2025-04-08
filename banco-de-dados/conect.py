@@ -12,8 +12,7 @@ def criar_tabela(cursor):
     cursor.execute(
         'CREATE TABLE clientes (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(100),'
         'email VARCHAR(150))'
-    ) 
-
+    )
 def inserir_cliente(cursor, nome, email):
     data = (nome, email)
     cursor.execute('INSERT INTO clientes (nome, email) VALUES (?, ?)', data)
