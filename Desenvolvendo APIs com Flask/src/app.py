@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask , request
 
 app = Flask(__name__)
 
@@ -9,9 +9,12 @@ def hello_word(usuario, idade):
     print(f'usuario: { type(usuario)}')
     return f'<h1>Ola mundo! usuario: {usuario}</h1>'
 
-@app.route("/admin")
+@app.route("/about", methods=["GET", "POST"])
 def admin():
-    return "<h1>Hello, Admin!</h1>"
-
+    if request.method == "POST":
+        return "<h1> metodo POST</h1>"
+    else:
+        return "<h1> metodo GET</h1>"
+    
 if __name__ == "__main__":
     app.run(debug=True)
