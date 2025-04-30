@@ -1,21 +1,22 @@
-from flask import Flask , request
+import os
+from flask import Flask
 
-app = Flask(__name__)
+def create_app(test_config=None):
+    app = Flask(__name__, instance_relative_config=True)
+    app.config.from_mapping(
+        SECRET_KEY='dev',
+        DATABASE=os.path.join(app.instance_path, 'diobank.sqlite'),
+    )
 
-@app.route('/olamundo/<usuario>/<int:idade>/<float:altura>')
-def ola_mundo(usuario, idade, altura):
-    return{
-        "usuario": usuario,
-        "idade": idade,
-        "altura": altura,
-     }
-
-@app.route("/about", methods=["GET", "POST"])
-def admin():
-    if request.method == "POST":
-        return "<h1> metodo POST</h1>"
+    if test_config is None:
+        app.config.from_pyfile('config.py', silent=True)
     else:
-        return "<h1> metodo GET</h1>"
-    
-if __name__ == "__main__":
-    app.run(debug=True)
+        app.config.from_mapping(test_config)
+
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    return app
+
